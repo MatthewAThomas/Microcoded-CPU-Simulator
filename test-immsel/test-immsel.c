@@ -69,9 +69,27 @@ void test_i_type_3 (void) {
     bool pass = (expected_immediate == returned_immediate);
 
     if (pass) {
-        printf("I type test 2: PASS\n");
+        printf("I type test 3: PASS\n");
     } else {
-        printf("I type test 2: FAIL\n");
+        printf("I type test 3: FAIL\n");
+    }
+}
+
+// sltiu: rd = 0, rs1 = 0, imm = -1
+// making sure sltiu is not sign extended
+void test_i_type_4 (void) {
+    int32_t funct3 = 0b011;
+    int32_t immediate = 0b111111111111;
+    int32_t instruction = make_i_type_instruction(funct3, immediate);
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = I_TYPE(instruction);
+    expected_immediate = 4095;
+    bool pass = (expected_immediate == returned_immediate);
+
+    if (pass) {
+        printf("I type test 4: PASS\n");
+    } else {
+        printf("I type test 4: FAIL\n");
     }
 }
 
@@ -80,5 +98,6 @@ int main(int argc, char **argv) {
     test_i_type_1();
     test_i_type_2();
     test_i_type_3();
+    test_i_type_4(); 
     return 0;
 }

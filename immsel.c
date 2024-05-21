@@ -32,9 +32,12 @@ int32_t I_STAR_TYPE (int32_t instruction) {
 }
 int32_t S_TYPE (int32_t instruction) {
     int s_type_lower_imm_length = 5;
+    int s_type_upper_imm_length = 7;
     int s_type_imm_length = 12;
 
     int32_t lower = instruction >> 7;
+    lower &= 0b11111;
+
     int32_t upper = (instruction >> 25) << s_type_lower_imm_length; 
     int32_t immediate = upper + lower;
     
