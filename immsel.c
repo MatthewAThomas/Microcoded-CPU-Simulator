@@ -39,9 +39,9 @@ int32_t S_TYPE (int32_t instruction) {
     lower &= 0b11111;
 
     int32_t upper = (instruction >> 25) << s_type_lower_imm_length; 
-    int32_t immediate = upper + lower;
+    int32_t immediate = upper | lower;
     
-    immediate = sign_extend(s_type_imm_length, immediate);
+    // immediate = sign_extend(s_type_imm_length, immediate);
     return immediate;
 }
 int32_t B_TYPE (int32_t instruction) {
@@ -61,14 +61,14 @@ int32_t B_TYPE (int32_t instruction) {
     bit_12 <<= 12;
 
     int immediate_length = 13;
-    int32_t immediate = bit_12 + bit_11 + bits_5_through_10 + bits_1_through_4;
-    immediate = sign_extend(immediate_length, immediate);
+    int32_t immediate = bit_12 | bit_11 | bits_5_through_10 | bits_1_through_4;
+    // immediate = sign_extend(immediate_length, immediate);
     return immediate;
 }
 int32_t U_TYPE (int32_t instruction) {
     int immediate_length = 20;
     int32_t immediate = (instruction >> 12) << 12;
-    immediate = sign_extend(immediate_length, immediate);
+    // immediate = sign_extend(immediate_length, immediate);
     return immediate;
 }
 int32_t J_TYPE (int32_t instruction) {
@@ -88,8 +88,8 @@ int32_t J_TYPE (int32_t instruction) {
     bit_20 <<= 20;
 
     int immediate_length = 21;
-    int32_t immediate = bit_20 + bits_12_through_19 + bit_11 + bits_1_through_10;
-    immediate = sign_extend(immediate_length, immediate);
+    int32_t immediate = bit_20 | bits_12_through_19 | bit_11 | bits_1_through_10;
+    // immediate = sign_extend(immediate_length, immediate);
     return immediate;
 }
 

@@ -1,7 +1,7 @@
-immsel.o: immsel.c call-functional-unit.h register.h bus.h
+../immsel.o: ../immsel.c ../call-functional-unit.h ../register.h ../bus.h
 
-call-functional-unit.h:
+../call-functional-unit.h:
 
-register.h:
+../register.h:
 
-bus.h:
+../bus.h:

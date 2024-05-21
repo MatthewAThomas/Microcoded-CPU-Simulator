@@ -93,11 +93,146 @@ void test_i_type_4 (void) {
     }
 }
 
+
+
+/*----------------------------------------- TESTING I STAR TYPE INSTRUCTIONS ------------------------------------*/
+int32_t make_i_star_type_instruction(int32_t immediate) {
+    immediate <<= 20;
+    int32_t instruction = immediate;
+    return instruction;
+}
+
+// make sure i star type instruction immediates are unsigned
+void test_i_star_type_1(void) {
+    int32_t immediate = 0b11111;
+    int32_t instruction = make_i_star_type_instruction(immediate);
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = I_STAR_TYPE(instruction);
+    expected_immediate = 0b11111;
+    bool pass = (expected_immediate == returned_immediate);
+
+    if (pass) {
+        printf("I Star type test 1: PASS\n");
+    } else {
+        printf("I Star type test 1: FAIL\n");
+    }
+}
+
+
+
+/*----------------------------------------------------- TESTING S TYPE INSTRUCTIONS ----------------------------------------*/
+int32_t make_s_type_instruction(int32_t upper, int32_t lower) {
+    upper <<= 25;
+    lower <<= 7;
+    int32_t instruction = upper + lower;
+    return instruction;
+}
+
+// basic test
+void test_s_type_1(void) {
+    int32_t upper = 0b0000001;
+    int32_t lower = 0b00001;
+    int32_t instruction = make_s_type_instruction(upper, lower);
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = S_TYPE(instruction);
+    expected_immediate = 0b000000100001;
+    bool pass = (expected_immediate == returned_immediate);
+
+    if (pass) {
+        printf("S type test 1: PASS\n");
+    } else {
+        printf("S type test 1: FAIL\n");
+    }
+}
+
+// make sure that immediate is sign extended
+void test_s_type_2(void) {
+    int32_t upper = 0b1111111;
+    int32_t lower = 0b11111;
+    int32_t instruction = make_s_type_instruction(upper, lower);
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = S_TYPE(instruction);
+    expected_immediate = -1;
+    bool pass = (expected_immediate == returned_immediate);
+
+    if (pass) {
+        printf("S type test 2: PASS\n");
+    } else {
+        printf("S type test 2: FAIL\n");
+    }
+}
+
+
+
+/*---------------------------------------------------- TESTING B TYPE INSTRUCTIONS -----------------------------------------*/
+
+int32_t make_b_type_instruction(int32_t twelfth, int32_t eleventh, int32_t ten_thru_five, int32_t four_thru_one) {
+    twelfth <<= 31;
+    eleventh <<= 7;
+    ten_thru_five <<= 25;
+    four_thru_one <<= 8;
+
+    int32_t instruction = twelfth | eleventh | eleventh | ten_thru_five | four_thru_one;
+    return instruction;
+}
+
+void test_b_type_1(void) {
+    int32_t twelfth = 1;
+    int32_t eleventh = 1;
+    int32_t ten_thru_five = 0b111111;
+    int32_t four_thru_one = 0b1111;
+    int32_t instruction = make_b_type_instruction(twelfth, eleventh, ten_thru_five, four_thru_one);
+
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = B_TYPE(instruction);
+    expected_immediate = -2;
+    bool pass = (returned_immediate == expected_immediate);
+
+    if (pass) {
+        printf("B type test 1: PASS\n");
+    } else {
+        printf("B type test 1: FAIL\n");
+    }
+}
+
+void test_b_type_2(void) {
+    int32_t twelfth = 0;
+    int32_t eleventh = 1;
+    int32_t ten_thru_five = 0b111111;
+    int32_t four_thru_one = 0b1111;
+    int32_t instruction = make_b_type_instruction(twelfth, eleventh, ten_thru_five, four_thru_one);
+
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = B_TYPE(instruction);
+    expected_immediate = 2047 * 2;
+    bool pass = (returned_immediate == expected_immediate);
+
+    if (pass) {
+        printf("B type test 2: PASS\n");
+    } else {
+        printf("B type test 2: FAIL\n");
+    }
+}
+
+
+
 // test main
 int main(int argc, char **argv) {
     test_i_type_1();
     test_i_type_2();
     test_i_type_3();
-    test_i_type_4(); 
+    test_i_type_4();
+    printf("\n");
+
+    test_i_star_type_1(); 
+    printf("\n");
+
+    test_s_type_1();
+    test_s_type_2();
+    printf("\n");
+
+    test_b_type_1();
+    test_b_type_2();
+    printf("\n");
     return 0;
 }
