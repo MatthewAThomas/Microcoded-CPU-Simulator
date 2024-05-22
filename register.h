@@ -1,7 +1,6 @@
 #include <stdint.h>
 
 struct Register {
-    int32_t *input;
     int32_t value;
     uint8_t *Ld_Wr;  // load or write signal
 };

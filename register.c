@@ -21,23 +21,21 @@ struct Register REGISTER_FILE[REGISTER_FILE_SIZE] = {0};
 /* Establish input and output wires of each register */
 void init_regs(void) {
     for (int i = 0; i < REGISTER_FILE_SIZE; i++) {
-        REGISTER_FILE[i].input = &DATA_BUS;
         REGISTER_FILE[i].Ld_Wr = &(CONTROL_BUS.RegWr);
     }
 
-    IR.input = &DATA_BUS;
     IR.Ld_Wr = &(CONTROL_BUS.IRLd);
 
-    A.input = &DATA_BUS;
     A.Ld_Wr = &(CONTROL_BUS.ALd);
 
-    B.input = &DATA_BUS;
     B.Ld_Wr = &(CONTROL_BUS.BLd);
 
-    MA.input = &DATA_BUS;
     MA.Ld_Wr = &(CONTROL_BUS.MALd);
 }
 
+/* The only registers that write directly to the data bus are in the register file. 
+   All other registers feed into functional units; these units read the contents of 
+   their respective registers each clock cycle. */
 void write_regs(void) {
     struct Register r = REGISTER_FILE[REGISTER_FILE_MUX[CONTROL_BUS.RegSel]];
 
@@ -48,17 +46,17 @@ void write_regs(void) {
 void load_regs(void) {
     struct Register r = REGISTER_FILE[REGISTER_FILE_MUX[CONTROL_BUS.RegSel]];
     if (*(r.Ld_Wr))
-        r.value = *(r.input);
+        r.value = DATA_BUS;
 
     if (*(IR.Ld_Wr))
-        IR.value = *(IR.input);
+        IR.value = DATA_BUS;
 
     if (*(A.Ld_Wr))
-        A.value = *(A.input);
+        A.value = DATA_BUS;
 
     if (*(B.Ld_Wr))
-        B.value = *(B.input);
+        B.value = DATA_BUS;
 
     if (*(MA.Ld_Wr))
-        MA.value = *(MA.input);
+        MA.value = DATA_BUS;
 }
