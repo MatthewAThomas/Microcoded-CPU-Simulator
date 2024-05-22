@@ -25,6 +25,8 @@ Create submodule for each 'functional unit' (registers, ALU, etc) and 'connectio
 - ucode engine submodule (branch submodule?)
 
 - immediate select, immediate select tri-state buffer submodule
+    - the immediate select formats immediates: e.g. for U type instructions, it would output
+      the immediate left shifted by 12
 
 Lastly, main.c, which initializes all the submodules, the wires between them, and starts running the CPU.
 

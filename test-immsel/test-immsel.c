@@ -216,6 +216,93 @@ void test_b_type_2(void) {
 
 
 
+/*------------------------------------------------ TESTING U TYPE INSTRUCTIONS -----------------------------------------------*/
+int32_t make_u_type_instruction(int32_t immediate) {
+    immediate <<= 12;
+    int32_t instruction = immediate;
+    return instruction;
+}
+
+void test_u_type_1(void) {
+    int32_t immediate = 0b11111111111111111111;
+    int32_t instruction = make_u_type_instruction(immediate);
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = U_TYPE(instruction);
+    expected_immediate = -1 << 12;
+    bool pass = (returned_immediate == expected_immediate);
+
+    if (pass) {
+        printf("U type test 1: PASS\n");
+    } else {
+        printf("U type test 1: FAIL\n");
+    }
+}
+
+void test_u_type_2(void) {
+    int32_t immediate = 0b01010101010101010101;
+    int32_t instruction = make_u_type_instruction(immediate);
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = U_TYPE(instruction);
+    expected_immediate = 0b01010101010101010101 << 12;
+    bool pass = (returned_immediate == expected_immediate);
+
+    if (pass) {
+        printf("U type test 2: PASS\n");
+    } else {
+        printf("U type test 2: FAIL\n");
+    }
+}
+
+
+/*------------------------------------------------ TESTING J TYPE INSTRUCTIONS ----------------------------------------------*/
+
+int32_t make_j_type_instruction(int32_t twentieth, int32_t nineteen_thru_twelve, int32_t eleventh, int32_t ten_thru_one) {
+    twentieth <<= 31;
+    nineteen_thru_twelve <<= 12;
+    eleventh <<= 20;
+    ten_thru_one <<= 21;
+    int32_t instruction = twentieth | nineteen_thru_twelve | eleventh | ten_thru_one;
+    return instruction;
+}
+
+void test_j_type_1(void) {
+    int32_t twentieth = 0;
+    int32_t nineteen_thru_twelve = 0b11111111;
+    int32_t eleventh = 0;
+    int32_t ten_thru_one = 0b1111111111;
+    int32_t instruction = make_j_type_instruction(twentieth, nineteen_thru_twelve, eleventh, ten_thru_one);
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = J_TYPE(instruction);
+    expected_immediate = 0b01111111101111111111 << 1;
+    bool pass = (returned_immediate == expected_immediate);
+
+    if (pass) {
+        printf("J type test 1: PASS\n");
+    } else {
+        printf("J type test 1: FAIL\n");
+    }
+}
+
+void test_j_type_2(void) {
+    int32_t twentieth = 1;
+    int32_t nineteen_thru_twelve = 0b11111111;
+    int32_t eleventh = 1;
+    int32_t ten_thru_one = 0b1111111111;
+    int32_t instruction = make_j_type_instruction(twentieth, nineteen_thru_twelve, eleventh, ten_thru_one);
+    int32_t expected_immediate, returned_immediate;
+    returned_immediate = J_TYPE(instruction);
+    expected_immediate = -2;
+    bool pass = (returned_immediate == expected_immediate);
+
+    if (pass) {
+        printf("J type test 2: PASS\n");
+    } else {
+        printf("J type test 2: FAIL\n");
+    }
+}
+
+
+
 // test main
 int main(int argc, char **argv) {
     test_i_type_1();
@@ -234,5 +321,14 @@ int main(int argc, char **argv) {
     test_b_type_1();
     test_b_type_2();
     printf("\n");
+
+    test_u_type_1();
+    test_u_type_2();
+    printf("\n");
+
+    test_j_type_1();
+    test_j_type_2();
+    printf("\n");
+
     return 0;
 }

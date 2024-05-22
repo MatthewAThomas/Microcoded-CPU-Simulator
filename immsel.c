@@ -1,3 +1,9 @@
+/*
+The immediate select formats immediates: e.g. for U type instructions, it would output
+the immediate left shifted by 12
+*/
+
+
 #include "call-functional-unit.h"
 #include "register.h"
 #include "bus.h"
