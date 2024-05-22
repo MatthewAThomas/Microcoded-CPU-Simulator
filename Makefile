@@ -1,5 +1,6 @@
 # CHATGPT CODE. I honeslty don't understand it.
 
+BIN := emulator
 DEPDIR := dep-files
 DEPFILES := $(addprefix $(DEPDIR)/, $(patsubst %.c,%.dep,$(wildcard *.c)))
 OBJDIR := obj
@@ -10,7 +11,11 @@ CFLAGS := -std=c99
 
 .PHONY: all clean
 
-all: $(OBJS)
+all: $(BIN)
+
+# Rule to create executable
+$(BIN): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
 
 # Rule to compile .c files to .o files
 $(OBJDIR)/%.o: %.c
