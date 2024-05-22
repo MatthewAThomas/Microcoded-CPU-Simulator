@@ -1,3 +1,3 @@
 #include <stdint.h>
 
-uint8_t ZERO_FLAG;
+uint8_t BUSY_FLAG;

@@ -1,9 +1,7 @@
 #include "alu.h"
 #include "call-functional-unit.h"
 #include "bus.h"
-
-int32_t A_input = 0;
-int32_t B_input = 0;
+#include "register.h"
 
 uint8_t ZERO_FLAG = 0;
 
@@ -84,8 +82,8 @@ void init_alu_unit(void) {
 }
 
 void exec_alu_unit(void) {
-    int32_t (* op) (int32_t, int32_t) = ALU_Ops[CONTROL_BUS.ALUOp];
-
-    if (CONTROL_BUS.ALUEn)
-        DATA_BUS = op(A_input, B_input);
+    if (CONTROL_BUS.ALUEn) {
+        int32_t (* op) (int32_t, int32_t) = ALU_Ops[CONTROL_BUS.ALUOp];
+        DATA_BUS = op(A.value, B.value);
+    }
 }

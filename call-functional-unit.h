@@ -7,8 +7,7 @@
 
 /* Memory Unit */
 void init_memory_unit(void);
-void load_memory_unit(void);
-void store_memory_unit(void);
+void exec_memory_unit(void);
 
 /* Immediate Select Unit */
 void init_imm_sel_unit(void);

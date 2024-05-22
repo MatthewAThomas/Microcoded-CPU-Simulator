@@ -1,0 +1,2 @@
+dep-files/mem.o: mem.c mem.h loader.h register.h call-functional-unit.h \
+ bus.h
