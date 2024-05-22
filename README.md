@@ -14,7 +14,7 @@ Create submodule for each 'functional unit' (registers, ALU, etc) and 'connectio
 - register template: defines register data type, declares all registers
 - register file, register file tri-state buffer, A and B registers, MA register, IR submodule
 
-- data memory, memory tri-state buffer, busy flag submodule
+- memory, memory tri-state buffer, busy flag submodule
 
 - ALU, ALU tri-state buffer, zero flag submodule
 

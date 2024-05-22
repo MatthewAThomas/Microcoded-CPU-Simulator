@@ -52,7 +52,7 @@ int32_t SUB (int32_t A_input, int32_t B_input) {
     return output;
 }
 int32_t SLT (int32_t A_input, int32_t B_input) {
-    int32_t output = A_input < B_input;
+    int32_t output = (A_input < B_input);
     ZERO_FLAG = (output == 0);
     return output;
 }

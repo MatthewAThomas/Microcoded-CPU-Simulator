@@ -1,7 +1,7 @@
-alu.o: alu.c alu.h call-functional-unit.h bus.h
+../alu.o: ../alu.c ../alu.h ../call-functional-unit.h ../bus.h
 
-alu.h:
+../alu.h:
 
-call-functional-unit.h:
+../call-functional-unit.h:
 
-bus.h:
+../bus.h:
