@@ -13,7 +13,7 @@ uint8_t MEMORY[MEM_SIZE];
 
 /* Initializes memory: loads the program */
 bool init_memory_unit(void) {
-    bool succesful_load = load(MEMORY);
+    bool succesful_load = load(MEMORY, MEM_SIZE);
     if (succesful_load == false) {
         printf("Error encountered while loading the program\n");
         return false;

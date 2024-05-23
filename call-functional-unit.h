@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 /* Defines an interface for interacting with functional units.
    Each cycle is broken into two steps:
     - write:
