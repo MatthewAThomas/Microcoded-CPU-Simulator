@@ -1,5 +1,7 @@
 #include "loader.h"
+#define _GNU_SOURCE
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
@@ -54,12 +56,6 @@ uint8_t hex_to_bin(char character) {
 }
 
 bool load_line(uint8_t *memory_pointer, char *line) {
-    if (line[0] == '\n')
-        return true;
-    
-    if (line[0] == '#')
-        return true;
-    
     int hex_digit_count = 0;
     for (int i = 0; i < MAX_LINE_SIZE; i++, line++) {
         char character = *line;
@@ -91,7 +87,7 @@ bool load(uint8_t *memory_pointer, int max_size) {
 
     /* Set the path of the program to be loaded here */
     char program_dir_path[4096] = "/home/projects/ucoded-processor/programs/";
-    char *program = "test1.txt";
+    char *program = "test2.txt";
     file_pointer = fopen(strcat(program_dir_path, program), "r");
     if (file_pointer == NULL) {
         printf("Program %s does not exist\n", program);
@@ -99,12 +95,13 @@ bool load(uint8_t *memory_pointer, int max_size) {
     }
 
     int max_num_lines = MAX_NUM_LINES(max_size);
-    char line[MAX_LINE_SIZE];
+    char *line;
+    int line_length = MAX_LINE_SIZE;
     int line_number = 0;
 
-    while (fgets(line, MAX_LINE_SIZE, file_pointer)) {
-        // fgets outputs gibberish everyother loop. Not sure why
-        if ((line[0] == '\n') || (line[0] == '\00'))
+    while (getline(&line, &line_length, file_pointer) != -1) {
+        // check for comments
+        if (line[0] == '#')
             continue;
         
         if (line_number >= max_num_lines) {
