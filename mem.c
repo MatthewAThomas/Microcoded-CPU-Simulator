@@ -3,6 +3,7 @@
 #include "register.h"
 #include "call-functional-unit.h"
 #include "bus.h"
+#include <stdio.h>
 
 #define MEM_SIZE 1024
 uint8_t BUSY_FLAG = 0;
@@ -11,9 +12,13 @@ uint8_t BUSY_FLAG = 0;
 uint8_t MEMORY[MEM_SIZE];
 
 /* Initializes memory: loads the program */
-void init_memory_unit(void) {
-    // TODO: write a function that can load machine code into MEM (in loader.c)
-    ;;
+bool init_memory_unit(void) {
+    bool succesful_load = load(MEMORY);
+    if (succesful_load == false) {
+        printf("Error encountered while loading the program\n");
+        return false;
+    }
+    return true;
 }
 
 // uint8_t MemWr;

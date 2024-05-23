@@ -1,11 +1,11 @@
-# Microcoded RISC-V CPU Simulator
+## Microcoded RISC-V CPU Emulator
 
-This project is an attempt to create a simulator of the microcoded, single-databus, 32-bit RISC-V CPU introduced in UC Berkeley's Introduction to Computer Architecture course (CS 152). This simulator abstracts at the functional unit level, and should be cycle accurate. More info about this CPU can be found here: https://inst.eecs.berkeley.edu/~cs152/sp24/assets/homeworks/hw01-handout.pdf
-
+This project is an attempt to create an emulator of the microcoded, single-databus, 32-bit RISC-V CPU introduced in UC Berkeley's Introduction to Computer Architecture course (CS 152). This emulator abstracts at the functional unit level, and should be cycle accurate. More info about this CPU can be found here: https://inst.eecs.berkeley.edu/~cs152/sp24/assets/homeworks/hw01-handout.pdf
 
 Current Approach (5/22/24):
 
-Create submodule for each 'functional unit' (registers, ALU, etc) and 'connection' (signals, buses).
+# The Emulator's Parts
+There is a submodule for each 'functional unit' (registers, ALU, etc) and 'connection' (signals, buses).
 
 - bus submodule
     - databus submodule: a signed 32 bit number
@@ -32,7 +32,7 @@ Create submodule for each 'functional unit' (registers, ALU, etc) and 'connectio
 
 Lastly, main.c, which initializes all the submodules, the wires between them, and starts running the CPU.
 
-
+# How the Emulator Works
 Instruction Cycle:
 - instruction fetch
 - instruction decode and execute
@@ -45,3 +45,22 @@ Instruction Cycle:
     - load loop: loop through the registers and any functional unit that loads from the databus. 
         - If load signal is high, latch data from databus
     - if instruction is completed, fetch next instruction (Instruction Cycle); else execute next uOp
+
+# Running the Emulator
+Programs run on the emulator are written in machine code (hexadecimal). The code is written in a text file such that 
+each line represents four bytes of memory. Comments are denoted with the pound (#) sign. 
+
+Formatting:
+Each line is expected to be 12 characters long, not including comments, with the first character at the beginning
+of the line. This allows for single spaces around bytes, eg:
+DE AD BE EF
+\# some comment
+CA FE D0 0D # another comment
+and so on. Uppercase and lowercase characters are both excepted. Instructions and data types sized a word or larger
+are expected to be word aligned (i.e. they should start at the beginning of a line).
+
+The size of the "physical" memory is defined by the macro MEM_SIZE in mem.c. It is assumed that programs will be running
+bare-metal, so the entire program must be loaded into physical memory: addresses 0 through MEM_SIZE - 1. Currently,
+memory is 1024 bytes.  
+
+Programs are located in the programs directory. To load a program into memory, set its path in loader.c
