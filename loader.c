@@ -103,11 +103,15 @@ bool load(uint8_t *memory_pointer, int max_size) {
     int line_number = 0;
 
     while (fgets(line, MAX_LINE_SIZE, file_pointer)) {
-        // if (line_number >= max_num_lines) {
-        //     printf("Loading Error: the program is larger than the current size of memory (%d bytes)\n", max_size);
-        //     fclose(file_pointer);
-        //     return false;
-        // }
+        // fgets outputs gibberish everyother loop. Not sure why
+        if ((line[0] == '\n') || (line[0] == '\00'))
+            continue;
+        
+        if (line_number >= max_num_lines) {
+            printf("Loading Error: the program is larger than the current size of memory (%d bytes)\n", max_size);
+            fclose(file_pointer);
+            return false;
+        }
 
         bool valid_line = load_line(memory_pointer, line);
         if (valid_line == false) {

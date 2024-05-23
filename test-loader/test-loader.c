@@ -9,7 +9,7 @@ bool load(uint8_t *memory_pointer, int max_size);
 
 int main(int argc, char **argv) {
     // change depending on the program being loaded (set in loader.c)
-    int max_size = 8;
+    int max_size = 16;
     load(MEMORY, max_size);
     for (int i = 0; i < max_size; i++) {
         printf("%x", MEMORY[i]);
