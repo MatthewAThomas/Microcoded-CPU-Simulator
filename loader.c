@@ -106,6 +106,7 @@ bool load(uint8_t *memory_pointer, int max_size) {
         
         if (line_number >= max_num_lines) {
             printf("Loading Error: the program is larger than the current size of memory (%d bytes)\n", max_size);
+            free(line);
             fclose(file_pointer);
             return false;
         }
@@ -113,6 +114,7 @@ bool load(uint8_t *memory_pointer, int max_size) {
         bool valid_line = load_line(memory_pointer, line);
         if (valid_line == false) {
             printf("Loading Error: formatting issue on line %d\n", line_number);
+            free(line);
             fclose(file_pointer);
             return false;
         }
@@ -121,6 +123,7 @@ bool load(uint8_t *memory_pointer, int max_size) {
         memory_pointer += 4;
     }
 
+    free(line);
     fclose(file_pointer);
     return true;
 }
