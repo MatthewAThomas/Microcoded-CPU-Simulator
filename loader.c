@@ -127,7 +127,7 @@ bool load(uint8_t *memory_pointer, int max_size) {
         bool valid_line = load_line(memory_pointer, line);
         if (valid_line == false) {
             printf("Loading Error: formatting issue on line %d\n", line_number);
-            printf("See README -> Running the Emulator -> Formatting\n");
+            printf("See README -> Running the Emulator -> Formatting Programs\n");
             free(line);
             fclose(file_pointer);
             return false;

@@ -47,20 +47,24 @@ Instruction Cycle:
     - if instruction is completed, fetch next instruction (Instruction Cycle); else execute next uOp
 
 # Running the Emulator
-Programs run on the emulator are written in machine code (hexadecimal). The code is written in a text file such that 
-each line represents four bytes of memory. Comments are denoted with the pound (#) sign. 
+Programs run on the emulator are written in machine code. The code is to be written to a text file located in the
+programs subdirectory. To load a program into memory, set its path in the load function in loader.c
 
-Formatting:
-Each line is expected to be 12 characters long, not including comments, with the first character at the beginning
-of the line. This allows for single spaces around bytes, eg:
-DE AD BE EF
-\# some comment
-CA FE D0 0D # another comment
-and so on. Uppercase and lowercase characters are both excepted. Instructions and data types sized a word or larger
-are expected to be word aligned (i.e. they should start at the beginning of a line).
+Formatting Programs:
+Each line containing machine code represents four bytes of memory.
+Each line of machine code is expected to be 12 characters long, including spaces but not including comments. Comments are 
+denoted with the pound (#) sign. A comment may be written on a line by itself, or on a line after machine code.
+Uppercase and lowercase characters are both excepted. Instructions and data types sized a word or larger
+are expected to be word aligned (i.e. they should start at the beginning of a line). An example of code that 
+does not violate formatting is shown below:
+
+DE AD be ef
+\# the line immediately below is empty (just new line character)
+
+  
+CafeD00d # the line immediately above has a couple of spaces but is otherwise blank
+123 4 5678
 
 The size of the "physical" memory is defined by the macro MEM_SIZE in mem.c. It is assumed that programs will be running
 bare-metal, so the entire program must be loaded into physical memory: addresses 0 through MEM_SIZE - 1. Currently,
 memory is 1024 bytes.  
-
-Programs are located in the programs directory. To load a program into memory, set its path in loader.c
