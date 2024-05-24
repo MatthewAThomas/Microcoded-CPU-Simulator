@@ -57,7 +57,7 @@ uint8_t hex_to_bin(char character) {
 
 bool load_line(uint8_t *memory_pointer, char *line) {
     int hex_digit_count = 0;
-    for (int i = 0; i < MAX_LINE_SIZE; i++, line++) {
+    for (int i = 0; (i < MAX_LINE_SIZE) && (hex_digit_count < 8); i++, line++) {
         char character = *line;
 
         if (character == '#')
@@ -81,6 +81,18 @@ bool load_line(uint8_t *memory_pointer, char *line) {
     return (hex_digit_count == 8);
 }
 
+bool skip_line(char *line, int line_length) {
+    for (int i = 0; i < line_length; i++) {
+        if (line[i] == '\n')
+            return true;
+        if (isxdigit(line[i]))
+            return false;
+        if (line[i] == '#')
+            return true;
+    }
+    return true;
+}
+
 /* Returns true if program succesfully loaded. False otherwise. */
 bool load(uint8_t *memory_pointer, int max_size) {
     FILE *file_pointer;
@@ -97,14 +109,15 @@ bool load(uint8_t *memory_pointer, int max_size) {
     int max_num_lines = MAX_NUM_LINES(max_size);
     char *line;
     int line_length = MAX_LINE_SIZE;
+    int num_code_lines = 0;
     int line_number = 0;
-
     while (getline(&line, &line_length, file_pointer) != -1) {
-        // check for comments
-        if (line[0] == '#')
+        line_number++;
+
+        if (skip_line(line, line_length))
             continue;
         
-        if (line_number >= max_num_lines) {
+        if (num_code_lines >= max_num_lines) {
             printf("Loading Error: the program is larger than the current size of memory (%d bytes)\n", max_size);
             free(line);
             fclose(file_pointer);
@@ -114,12 +127,13 @@ bool load(uint8_t *memory_pointer, int max_size) {
         bool valid_line = load_line(memory_pointer, line);
         if (valid_line == false) {
             printf("Loading Error: formatting issue on line %d\n", line_number);
+            printf("See README -> Running the Emulator -> Formatting\n");
             free(line);
             fclose(file_pointer);
             return false;
         }
 
-        line_number++;
+        num_code_lines++;
         memory_pointer += 4;
     }
 
