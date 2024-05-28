@@ -33,7 +33,7 @@ typedef struct {
 state_dictionary STATE_DICTIONARY[NUM_LABELED_STATES];
 
 /* If too few or too many states are read, returns false. Else true */
-bool initialize_state_dictionary(void) {
+bool initialize_state_dictionary(int *start_state_index) {
     int dictionary_index = 0;
     for (int state_index = 0; dictionary_index < NUM_LABELED_STATES; state_index++) {
         char *state = MICROCODE[state_index].state;
@@ -43,6 +43,10 @@ bool initialize_state_dictionary(void) {
             STATE_DICTIONARY[dictionary_index].state_index = state_index;
             dictionary_index++;
         }
+
+        /* First micro-operation executed should be FETCH0 */
+        if (!strcmp(state, "FETCH0"))
+            *start_state_index = state_index;
 
         /* Return if the end of the microcode is reached. NOP0 should be the end of the microcode. */
         if (!strcmp(state, "NOP0"))
@@ -94,8 +98,11 @@ int opcode_to_state_index(void) {
 /* The MICROCODE index of the current micro-operation */
 int STATE_INDEX;
 
-void init_ucode_engine(void) {
-    STATE_INDEX = 0;
+bool init_ucode_engine(void) {
+    bool success = initialize_state_dictionary(&STATE_INDEX);
+    if (!success)
+        printf("State dictionary initialized incorrectly\n");
+    return success;
 }
 
 void decode(int32_t instruction) {
@@ -177,7 +184,7 @@ int get_next_uop(micro_op current_op) {
     return -1;
 }
 
-void exec_ucode_engine(void) {
+int exec_ucode_engine(void) {
     // TODO: figure out which instruction stops the program
     while (true) {
         micro_op current_op = MICROCODE[STATE_INDEX];
@@ -189,7 +196,10 @@ void exec_ucode_engine(void) {
 
         if (STATE_INDEX == -1) {
             printf("Error encountered while running the program\n");
-            return;
+            return 1;
         }
     }
+
+    // Unreachable until you figure out which instruction stops the program
+    return 0;
 }

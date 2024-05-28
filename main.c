@@ -1,10 +1,23 @@
-#include "alu.h"
-#include "bus.h"
 #include "call-functional-unit.h"
 #include "ucode-engine.h"
-#include "immsel.h"
-#include "register.h"
+#include <stdbool.h>
+#include <stdio.h>
 
 int main(int argc, char **argv) {
-    return 0;
+    /* Initialize functional units */    
+    if (init_memory_unit() == false) {
+        printf("Error encountered while initializing the memory unit\n");
+        return -1;
+    }
+    init_imm_sel_unit();
+    init_alu_unit();
+    init_regs();
+    if (init_ucode_engine() == false) {
+        printf("Error encountered while initializising the ucode engine\n");
+        return -1;
+    }
+
+    /* Run the processor */
+    int exit_code = exec_ucode_engine();
+    return exit_code;
 }

@@ -1,5 +1,6 @@
 /*
 Contains the microcode "ROM"
+"FETCH0" is assumed to be the first micro-op in the ROM
 "NOP0" is assumed to be the last micro-op in the ROM
 */
 
@@ -31,7 +32,7 @@ Contains the microcode "ROM"
 #define SRA 15
 
 #define default 0
-// INSERT NEW uOPS BEFORE NOP0. NOP0 SHOULD BE THE LAST LISTED uOP
+// INSERT NEW uOPS BEFORE NOP0. NOP0 SHOULD BE THE LAST LISTED uOP. FETCH0 SHOULD BE THE FIRST LISTED uOP
 micro_op MICROCODE[] = {
     //    STATE       NEXT STATE      uBr          IRLd    RegSel   RegWr    RegEn     ALd      BLd     ALUOp    ALUEn    MALd     MemWr    MemEn    ImmSel   ImmEn       OPCODE
     {"FETCH0"      ,           "",          "N", {default,      PC,       0,       1,       1, default, default,       0,       1,       0,       0, default,       0},            0},
