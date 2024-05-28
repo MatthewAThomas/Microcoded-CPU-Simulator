@@ -64,6 +64,31 @@ int32_t AND (int32_t A_input, int32_t B_input) {
     ZERO_FLAG = (output == 0);
     return output;
 }
+int32_t OR (int32_t A_input, int32_t B_input) {
+    int32_t output = A_input | B_input;
+    ZERO_FLAG = (output == 0);
+    return output;
+}
+int32_t XOR (int32_t A_input, int32_t B_input) {
+    int32_t output = A_input ^ B_input;
+    ZERO_FLAG = (output == 0);
+    return output;
+}
+int32_t SLL (int32_t A_input, int32_t B_input) {
+    int32_t output = A_input << B_input;
+    ZERO_FLAG = (output == 0);
+    return output;
+}
+int32_t SRL (int32_t A_input, int32_t B_input) {
+    int32_t output = ((unsigned) A_input) >> B_input;
+    ZERO_FLAG = (output == 0);
+    return output;
+}
+int32_t SRA (int32_t A_input, int32_t B_input) {
+    int32_t output = A_input >> B_input;
+    ZERO_FLAG = (output == 0);
+    return output;
+}
 
 
 /* Functions that define interactions with the ALU */
@@ -79,13 +104,11 @@ void init_alu_unit(void) {
     ALU_Ops[8] = SLT;
     ALU_Ops[9] = SLTU;
     ALU_Ops[10] = AND;
-    /*
-    ALU_Ops[11] = OR
-    ALU_Ops[12] = XOR
-    ALU_Ops[13] = SLL
-    ALU_Ops[14] = SRL
-    ALU_Ops[15] = SRA
-    */
+    ALU_Ops[11] = OR;
+    ALU_Ops[12] = XOR;
+    ALU_Ops[13] = SLL;
+    ALU_Ops[14] = SRL;
+    ALU_Ops[15] = SRA;
 }
 
 void exec_alu_unit(void) {

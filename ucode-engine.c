@@ -5,6 +5,7 @@
 #include "microcode.h"
 #include "bus.h"
 #include "call-functional-unit.h"
+#include "alu.h"
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
@@ -67,6 +68,7 @@ int label_to_state_index(char *next_state) {
             return STATE_DICTIONARY[i].state_index;
     }
 
+    printf("Invalid next state provided\n");
     return -1;
 }
 
@@ -81,6 +83,7 @@ int opcode_to_state_index(void) {
             return STATE_DICTIONARY[i].state_index;
     }
 
+    printf("Invalid next state provided\n");
     return -1;
 }
 
@@ -134,7 +137,6 @@ void exec_functional_units(void) {
 
 /* Returns index of next micro-op to be exectued. -1 If index not found. */
 int get_next_uop(micro_op current_op) {
-    // get next uop to execute
     char *uBr = current_op.uBr;
 
     if (!strcmp(uBr, "D")) {
@@ -157,7 +159,19 @@ int get_next_uop(micro_op current_op) {
         return label_to_state_index(next_state);
     }
 
-    // TODO: IMPLEMENT EZ, NZ
+    if (!strcmp(uBr, "EZ")) {
+        char *next_state = current_op.next_state;
+        if (ZERO_FLAG == 1)
+            return label_to_state_index(next_state);
+        return STATE_INDEX + 1;
+    }
+
+    if (!strcmp(uBr, "NZ")) {
+        char *next_state = current_op.next_state;
+        if (ZERO_FLAG == 0)
+            return label_to_state_index(next_state);
+        return STATE_INDEX + 1;
+    }
 
     printf("Invalid next state provided\n");
     return -1;
@@ -172,5 +186,10 @@ void exec_ucode_engine(void) {
         set_control_signals(control_signals);
         exec_functional_units();
         STATE_INDEX = get_next_uop(current_op);
+
+        if (STATE_INDEX == -1) {
+            printf("Error encountered while running the program\n");
+            return;
+        }
     }
 }
