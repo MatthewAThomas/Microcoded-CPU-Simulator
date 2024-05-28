@@ -97,7 +97,7 @@ bool skip_line(char *line, int line_length) {
 bool load(uint8_t *memory_pointer, int max_size) {
     FILE *file_pointer;
 
-    /* Set the path of the program to be loaded here */
+    /* SET THE PATH OF THE PROGRAM TO BE LOADED HERE */
     char program_dir_path[4096] = "/home/projects/ucoded-processor/programs/";
     char *program = "test2.txt";
     file_pointer = fopen(strcat(program_dir_path, program), "r");

@@ -5,10 +5,11 @@
 #include "bus.h"
 #include <stdio.h>
 
-#define MEM_SIZE 1024
-uint8_t BUSY_FLAG = 0;
+#define MEM_SIZE 1024  // in bytes
 
-/* MEM_SIZE defined in loader.h */
+uint8_t BUSY_FLAG = 0; // Currently assumes the memory unit has 1 cycle latency
+                       // i.e. busy flag is always 0
+
 uint8_t MEMORY[MEM_SIZE];
 
 /* Initializes memory: loads the program */
@@ -20,10 +21,6 @@ bool init_memory_unit(void) {
     }
     return true;
 }
-
-// uint8_t MemWr;
-// uint8_t MemEn;
-
 
 static void write(int32_t data, int32_t address) {
     uint8_t first = 0b11111111 & data;
@@ -46,8 +43,6 @@ static int32_t read(int32_t address) {
     return data;
 }
 
-// assuming the memory unit has 1 cycle latency
-// i.e. busy flag is always 0
 void exec_memory_unit(void) {
     int32_t address = MA.value;
 

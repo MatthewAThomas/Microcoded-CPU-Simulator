@@ -28,7 +28,7 @@ typedef struct {
 
 /* Each micro-operation corresponds to an index of the MICROCODE array.
    The state_dictionary keeps track of the indices of certain microperations.
-   NUM_LABELED_STATES == the number of micro-operations with labels (e.g. FETCH0, NOP0, etc).
+   NUM_LABELED_STATES == the number of micro-operations with labels (e.g. FETCH0, NOP0, etc). Defined in microcode.h.
 */
 state_dictionary STATE_DICTIONARY[NUM_LABELED_STATES];
 
@@ -41,6 +41,7 @@ bool initialize_state_dictionary(int *start_state_index) {
         if (strlen(state) > 0) {
             STATE_DICTIONARY[dictionary_index].state = state;
             STATE_DICTIONARY[dictionary_index].state_index = state_index;
+            STATE_DICTIONARY[dictionary_index].opcode = MICROCODE[state_index].opcode;
             dictionary_index++;
         }
 

@@ -30,7 +30,7 @@ There is a submodule for each 'functional unit' (registers, ALU, etc) and 'conne
     - the immediate select formats immediates: e.g. for U type instructions, it would output
       the immediate left shifted by 12
 
-Lastly, main.c, which initializes all the submodules, the wires between them, and starts running the CPU.
+Lastly, main.c, which initializes all the submodules and starts running the CPU.
 
 # How the Emulator Works
 Instruction Cycle:
@@ -71,3 +71,6 @@ CafeD00d # the line immediately above has a couple of spaces but is otherwise bl
 The size of the "physical" memory is defined by the macro MEM_SIZE in mem.c. It is assumed that programs will be running
 bare-metal, so the entire program must be loaded into physical memory: addresses 0 through MEM_SIZE - 1. Currently,
 memory is 1024 bytes.  
+
+# Future Changes
+Allow the emulator to take inputs for the size of memory and path to the program to be run. 
