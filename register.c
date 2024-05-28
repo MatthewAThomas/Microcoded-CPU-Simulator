@@ -1,6 +1,6 @@
 #include "register.h"
+#include "ucode-engine.h"
 #include "call-functional-unit.h"
-#include "decode.h"
 #include "bus.h"
 
 #define REGISTER_FILE_SIZE 33

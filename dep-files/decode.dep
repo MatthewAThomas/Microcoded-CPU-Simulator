@@ -1,1 +1,0 @@
-dep-files/decode.o: decode.c decode.h

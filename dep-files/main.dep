@@ -1,2 +1,2 @@
-dep-files/main.o: main.c alu.h bus.h call-functional-unit.h decode.h \
- immsel.h register.h
+dep-files/main.o: main.c alu.h bus.h call-functional-unit.h \
+ ucode-engine.h microcode.h immsel.h register.h

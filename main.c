@@ -1,7 +1,7 @@
 #include "alu.h"
 #include "bus.h"
 #include "call-functional-unit.h"
-#include "decode.h"
+#include "ucode-engine.h"
 #include "immsel.h"
 #include "register.h"
 

@@ -2,7 +2,7 @@
 
 This project is an attempt to create an emulator of the microcoded, single-databus, 32-bit RISC-V CPU introduced in UC Berkeley's Introduction to Computer Architecture course (CS 152). This emulator abstracts at the functional unit level, and should be cycle accurate. More info about this CPU can be found here: https://inst.eecs.berkeley.edu/~cs152/sp24/assets/homeworks/hw01-handout.pdf
 
-Current Approach (5/22/24):
+Current Approach (5/27/24):
 
 # The Emulator's Parts
 There is a submodule for each 'functional unit' (registers, ALU, etc) and 'connection' (signals, buses).
@@ -34,14 +34,17 @@ Lastly, main.c, which initializes all the submodules, the wires between them, an
 
 # How the Emulator Works
 Instruction Cycle:
-- instruction fetch
-- instruction decode and execute
-    Micro Operation Cycle:
+- instruction fetch and decode
+    - FETCH0
+        - D microbranch invokes instruction decode
+- instruction execute
+
+- Micro Operation Cycle:
     - ucode engine gets uOp, sets various control signals
     - write loop: loop through functional units. If enable signal is high, write data to the databus
         - functional units read from data bus or whatever registers feed into them 
         - e.g. the ALU would read from the A and B registers and calculate an operation; 
-          it would write to the databus if ALUEn is set high
+            it would write to the databus if ALUEn is set high
     - load loop: loop through the registers and any functional unit that loads from the databus. 
         - If load signal is high, latch data from databus
     - if instruction is completed, fetch next instruction (Instruction Cycle); else execute next uOp

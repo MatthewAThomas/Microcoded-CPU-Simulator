@@ -79,6 +79,13 @@ void init_alu_unit(void) {
     ALU_Ops[8] = SLT;
     ALU_Ops[9] = SLTU;
     ALU_Ops[10] = AND;
+    /*
+    ALU_Ops[11] = OR
+    ALU_Ops[12] = XOR
+    ALU_Ops[13] = SLL
+    ALU_Ops[14] = SRL
+    ALU_Ops[15] = SRA
+    */
 }
 
 void exec_alu_unit(void) {

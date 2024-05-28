@@ -1,0 +1,2 @@
+dep-files/ucode-engine.o: ucode-engine.c ucode-engine.h register.h mem.h \
+ immsel.h microcode.h bus.h call-functional-unit.h
