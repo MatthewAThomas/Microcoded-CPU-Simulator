@@ -1,5 +1,7 @@
 #include <stdint.h>
 
+#define NUM_LABELED_STATES 2
+
 #define MICROCODE_WIDTH 13
 
 #define STATE_IDENTIFIER_LENGTH 11

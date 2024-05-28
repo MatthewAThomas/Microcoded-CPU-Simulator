@@ -27,15 +27,14 @@ typedef struct {
 
 /* Each micro-operation corresponds to an index of the MICROCODE array.
    The state_dictionary keeps track of the indices of certain microperations.
-   NUM_STATES == the number of micro-operations with labels (e.g. FETCH0, NOP0, etc).
+   NUM_LABELED_STATES == the number of micro-operations with labels (e.g. FETCH0, NOP0, etc).
 */
-#define NUM_STATES 2
-state_dictionary STATE_DICTIONARY[NUM_STATES];
+state_dictionary STATE_DICTIONARY[NUM_LABELED_STATES];
 
 /* If too few or too many states are read, returns false. Else true */
 bool initialize_state_dictionary(void) {
     int dictionary_index = 0;
-    for (int state_index = 0; dictionary_index < NUM_STATES; state_index++) {
+    for (int state_index = 0; dictionary_index < NUM_LABELED_STATES; state_index++) {
         char *state = MICROCODE[state_index].state;
 
         if (strlen(state) > 0) {
@@ -46,7 +45,7 @@ bool initialize_state_dictionary(void) {
 
         /* Return if the end of the microcode is reached. NOP0 should be the end of the microcode. */
         if (!strcmp(state, "NOP0"))
-            return (dictionary_index == NUM_STATES);
+            return (dictionary_index == NUM_LABELED_STATES - 1);
     }
 
     /* Unreachable */
@@ -61,7 +60,7 @@ int label_to_state_index(char *next_state) {
     if (!strcmp(next_state, ""))
         
 
-    for (int i = 0; i < NUM_STATES; i++) {
+    for (int i = 0; i < NUM_LABELED_STATES; i++) {
         char *state = STATE_DICTIONARY[i].state;
         
         if (!strcmp(state, next_state))
@@ -75,7 +74,7 @@ int label_to_state_index(char *next_state) {
    If the uop is not found, -1 is returned 
 */
 int opcode_to_state_index(void) {
-    for (int i = 0; i < NUM_STATES; i++) {
+    for (int i = 0; i < NUM_LABELED_STATES; i++) {
         uint8_t opcode = STATE_DICTIONARY[i].opcode;
         
         if (opcode == OPCODE)
@@ -87,7 +86,7 @@ int opcode_to_state_index(void) {
 
 
 
-/* --------------------------------------------------- uCODE ENGINE -------------------------------------------------*/
+/* --------------------------------------------------- uCODE ENGINE ------------------------------------------------- */
 
 /* The MICROCODE index of the current micro-operation */
 int STATE_INDEX;
