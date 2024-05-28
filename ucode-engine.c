@@ -89,6 +89,7 @@ int opcode_to_state_index(void) {
 
 /* --------------------------------------------------- uCODE ENGINE -------------------------------------------------*/
 
+/* The MICROCODE index of the current micro-operation */
 int STATE_INDEX;
 
 void init_ucode_engine(void) {
@@ -106,10 +107,7 @@ void decode(int32_t instruction) {
     REGISTER_FILE_MUX[4] = rs2;
 }
 
-/* Returns index of next micro-op to be exectued. -1 If index not found. */
-int exec_uop(void) {
-    micro_op current_op = MICROCODE[STATE_INDEX];
-    uint8_t *control_signals = current_op.control_signals;
+void set_control_signals(uint8_t *control_signals) {
     CONTROL_BUS.IRLd = control_signals[0];
     CONTROL_BUS.RegSel = control_signals[1];
     CONTROL_BUS.RegWr = control_signals[2];
@@ -123,16 +121,21 @@ int exec_uop(void) {
     CONTROL_BUS.MemEn = control_signals[10];
     CONTROL_BUS.ImmSel = control_signals[11];
     CONTROL_BUS.ImmEn = control_signals[12];
+}
 
-
+void exec_functional_units(void) {
+    // "write loop" (README -> How the Emulator Works)
     exec_memory_unit();
     exec_imm_sel_unit();
     exec_alu_unit();
     write_regs();
-
+    // "load loop" (README -> How the Emulator Works)
     load_regs();
+}
 
-
+/* Returns index of next micro-op to be exectued. -1 If index not found. */
+int get_next_uop(micro_op current_op) {
+    // get next uop to execute
     char *uBr = current_op.uBr;
 
     if (!strcmp(uBr, "D")) {
@@ -164,7 +167,11 @@ int exec_uop(void) {
 void exec_ucode_engine(void) {
     // TODO: figure out which instruction stops the program
     while (true) {
-        STATE_INDEX = exec_uop();
+        micro_op current_op = MICROCODE[STATE_INDEX];
+        uint8_t *control_signals = current_op.control_signals;
 
+        set_control_signals(control_signals);
+        exec_functional_units();
+        STATE_INDEX = get_next_uop(current_op);
     }
 }
