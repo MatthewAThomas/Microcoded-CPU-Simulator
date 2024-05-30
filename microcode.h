@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#define NUM_LABELED_STATES 2
+#define NUM_LABELED_STATES 3
 
 #define MICROCODE_WIDTH 13
 

@@ -39,8 +39,12 @@ micro_op MICROCODE[] = {
                 {"",           "",          "S", {      1, default,       0,       0,       0, default, default,       0,       0,       0,       1, default,       0},            0},
                 {"",           "",          "D", {      0,      PC,       1,       0,       0, default, INC_A_4,       1, default,       0,       0, default,       0},            0},
 
+    {"ADD"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0},    0b0110011},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},            0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     ADD,       1,       0,       0,       0, default,       0},            0},
+
     {"NOP0"        ,      "FETH0",          "J", { default, default,      0,       0, default, default, default,       0, default,       0,       0, default,       0},            0}
 };
 
-    //{"          ", "          ", "          ", {       ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        }}
-    //                              {"", "", "", {       ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        }}
+    //{"          ", "          ", "          ", {       ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        },             },
+    //          {"",           "",           "", {       ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        },             },

@@ -64,9 +64,6 @@ bool initialize_state_dictionary(int *start_state_index) {
    If the state is not found, -1 is returned 
 */
 int label_to_state_index(char *next_state) {
-    if (!strcmp(next_state, ""))
-        
-
     for (int i = 0; i < NUM_LABELED_STATES; i++) {
         char *state = STATE_DICTIONARY[i].state;
         

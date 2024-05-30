@@ -99,7 +99,7 @@ bool load(uint8_t *memory_pointer, int max_size) {
 
     /* SET THE PATH OF THE PROGRAM TO BE LOADED HERE */
     char program_dir_path[4096] = "/home/projects/ucoded-processor/programs/";
-    char *program = "test2.txt";
+    char *program = "test-add.txt";
     file_pointer = fopen(strcat(program_dir_path, program), "r");
     if (file_pointer == NULL) {
         printf("Program %s does not exist\n", program);
