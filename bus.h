@@ -2,7 +2,7 @@
 
 int32_t DATA_BUS;
 
-struct control_bus {
+struct control_signals {
     uint8_t IRLd;
     uint8_t ALUOp;
     uint8_t ALd;
@@ -17,7 +17,7 @@ struct control_bus {
     uint8_t ImmEn;
     uint8_t ImmSel;
 };
-struct control_bus CONTROL_BUS;
+struct control_signals CONTROL_SIGNALS;
 
 /* Initialize bus data structures. Return NULL if not succesful */
 // void init_control_bus(void);

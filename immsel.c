@@ -176,7 +176,7 @@ static enum instr_type get_instruction_type(int32_t instruction) {
 void exec_imm_sel_unit(void) {
     int32_t instruction = IR.value;
 
-    if (CONTROL_BUS.ImmSel) {
+    if (CONTROL_SIGNALS.ImmSel) {
         enum instr_type t = get_instruction_type(instruction);
         int32_t immediate = (immediate_formats[t])(instruction);
         DATA_BUS = immediate;

@@ -10,7 +10,7 @@ struct Register A = {0};
 struct Register B = {0};
 struct Register MA = {0};
 
-/* REGISTER_FILE is indexed by RegSel (in CONTROL_BUS)
+/* REGISTER_FILE is indexed by RegSel (in CONTROL_SIGNALS)
    32 GPRs + PC
    PC is register 32
    RA is register 1
@@ -21,32 +21,32 @@ struct Register REGISTER_FILE[REGISTER_FILE_SIZE] = {0};
 /* Establish input and output wires of each register */
 void init_regs(void) {
     for (int i = 0; i < REGISTER_FILE_SIZE; i++) {
-        REGISTER_FILE[i].Ld_Wr = &(CONTROL_BUS.RegWr);
+        REGISTER_FILE[i].Ld_Wr = &(CONTROL_SIGNALS.RegWr);
     }
 
-    IR.Ld_Wr = &(CONTROL_BUS.IRLd);
+    IR.Ld_Wr = &(CONTROL_SIGNALS.IRLd);
 
-    A.Ld_Wr = &(CONTROL_BUS.ALd);
+    A.Ld_Wr = &(CONTROL_SIGNALS.ALd);
 
-    B.Ld_Wr = &(CONTROL_BUS.BLd);
+    B.Ld_Wr = &(CONTROL_SIGNALS.BLd);
 
-    MA.Ld_Wr = &(CONTROL_BUS.MALd);
+    MA.Ld_Wr = &(CONTROL_SIGNALS.MALd);
 }
 
 /* The only registers that write directly to the data bus are in the register file. 
    All other registers feed into functional units; these units read the contents of 
    their respective registers each clock cycle. */
 void write_regs(void) {
-    struct Register r = REGISTER_FILE[REGISTER_FILE_MUX[CONTROL_BUS.RegSel]];
+    struct Register r = REGISTER_FILE[REGISTER_FILE_MUX[CONTROL_SIGNALS.RegSel]];
 
-    if (CONTROL_BUS.RegEn)
+    if (CONTROL_SIGNALS.RegEn)
         DATA_BUS = r.value;
 }
 
 void load_regs(void) {
-    struct Register r = REGISTER_FILE[REGISTER_FILE_MUX[CONTROL_BUS.RegSel]];
-    if (*(r.Ld_Wr))
-        r.value = DATA_BUS;
+    struct Register *r_pointer = &(REGISTER_FILE[REGISTER_FILE_MUX[CONTROL_SIGNALS.RegSel]]);
+    if (*(r_pointer -> Ld_Wr))
+        r_pointer -> value = DATA_BUS;
 
     if (*(IR.Ld_Wr))
         IR.value = DATA_BUS;

@@ -114,8 +114,8 @@ void init_alu_unit(void) {
 }
 
 void exec_alu_unit(void) {
-    if (CONTROL_BUS.ALUEn) {
-        int32_t (* op) (int32_t, int32_t) = ALU_Ops[CONTROL_BUS.ALUOp];
+    if (CONTROL_SIGNALS.ALUEn) {
+        int32_t (* op) (int32_t, int32_t) = ALU_Ops[CONTROL_SIGNALS.ALUOp];
         DATA_BUS = op(A.value, B.value);
     }
 }

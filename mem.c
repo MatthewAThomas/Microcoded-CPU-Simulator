@@ -46,9 +46,9 @@ static int32_t read(int32_t address) {
 void exec_memory_unit(void) {
     int32_t address = MA.value;
 
-    if (CONTROL_BUS.MemWr)
+    if (CONTROL_SIGNALS.MemWr)
         write(DATA_BUS, address);
 
-    if (CONTROL_BUS.MemEn)
+    if (CONTROL_SIGNALS.MemEn)
         DATA_BUS = read(address);
 }

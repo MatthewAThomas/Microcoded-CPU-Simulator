@@ -119,19 +119,19 @@ void decode(int32_t instruction) {
 }
 
 void set_control_signals(uint8_t *control_signals) {
-    CONTROL_BUS.IRLd = control_signals[0];
-    CONTROL_BUS.RegSel = control_signals[1];
-    CONTROL_BUS.RegWr = control_signals[2];
-    CONTROL_BUS.RegEn = control_signals[3];
-    CONTROL_BUS.ALd = control_signals[4];
-    CONTROL_BUS.BLd = control_signals[5];
-    CONTROL_BUS.ALUOp = control_signals[6];
-    CONTROL_BUS.ALUEn = control_signals[7];
-    CONTROL_BUS.MALd = control_signals[8];
-    CONTROL_BUS.MemWr = control_signals[9];
-    CONTROL_BUS.MemEn = control_signals[10];
-    CONTROL_BUS.ImmSel = control_signals[11];
-    CONTROL_BUS.ImmEn = control_signals[12];
+    CONTROL_SIGNALS.IRLd = control_signals[0];
+    CONTROL_SIGNALS.RegSel = control_signals[1];
+    CONTROL_SIGNALS.RegWr = control_signals[2];
+    CONTROL_SIGNALS.RegEn = control_signals[3];
+    CONTROL_SIGNALS.ALd = control_signals[4];
+    CONTROL_SIGNALS.BLd = control_signals[5];
+    CONTROL_SIGNALS.ALUOp = control_signals[6];
+    CONTROL_SIGNALS.ALUEn = control_signals[7];
+    CONTROL_SIGNALS.MALd = control_signals[8];
+    CONTROL_SIGNALS.MemWr = control_signals[9];
+    CONTROL_SIGNALS.MemEn = control_signals[10];
+    CONTROL_SIGNALS.ImmSel = control_signals[11];
+    CONTROL_SIGNALS.ImmEn = control_signals[12];
 }
 
 void exec_functional_units(void) {
