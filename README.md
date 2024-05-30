@@ -54,6 +54,7 @@ Programs run on the emulator are written in machine code. The code is to be writ
 programs subdirectory. To load a program into memory, set its path in the load function in loader.c
 
 Formatting Programs:
+The CPU uses little-endian byte ordering.
 Each line containing machine code represents four bytes of memory.
 Each line of machine code is expected to be 12 characters long, including spaces but not including comments. Comments are 
 denoted with the pound (#) sign. A comment may be written on a line by itself, or on a line after machine code.

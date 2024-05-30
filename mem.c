@@ -28,16 +28,16 @@ static void write(int32_t data, int32_t address) {
     uint8_t third = 0b11111111 & (data >> 16);
     uint8_t fourth = 0b11111111 & (data >> 24);
 
-    MEMORY[address + 3] = first;
-    MEMORY[address + 2] = second;
-    MEMORY[address + 1] = third;
-    MEMORY[address] = fourth;
+    MEMORY[address] = first;
+    MEMORY[address + 1] = second;
+    MEMORY[address + 2] = third;
+    MEMORY[address + 3] = fourth;
 }
 static int32_t read(int32_t address) {
-    int32_t first = MEMORY[address + 3];
-    int32_t second = (MEMORY[address + 2]) << 8;
-    int32_t third = (MEMORY[address + 1]) << 16;
-    int32_t fourth = (MEMORY[address]) << 24;
+    int32_t first = MEMORY[address];
+    int32_t second = (MEMORY[address + 1]) << 8;
+    int32_t third = (MEMORY[address + 2]) << 16;
+    int32_t fourth = (MEMORY[address + 3]) << 24;
 
     int32_t data = first | second | third | fourth;
     return data;
