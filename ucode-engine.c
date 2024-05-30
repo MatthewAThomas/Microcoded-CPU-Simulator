@@ -37,13 +37,12 @@ bool initialize_state_dictionary(int *start_state_index) {
     int dictionary_index = 0;
     for (int state_index = 0; dictionary_index < NUM_LABELED_STATES; state_index++) {
         char *state = MICROCODE[state_index].state;
+        if (strlen(state) == 0)
+            continue;
 
-        if (strlen(state) > 0) {
-            STATE_DICTIONARY[dictionary_index].state = state;
-            STATE_DICTIONARY[dictionary_index].state_index = state_index;
-            STATE_DICTIONARY[dictionary_index].opcode = MICROCODE[state_index].opcode;
-            dictionary_index++;
-        }
+        STATE_DICTIONARY[dictionary_index].state = state;
+        STATE_DICTIONARY[dictionary_index].state_index = state_index;
+        STATE_DICTIONARY[dictionary_index].opcode = MICROCODE[state_index].opcode;
 
         /* First micro-operation executed should be FETCH0 */
         if (!strcmp(state, "FETCH0"))
@@ -51,7 +50,9 @@ bool initialize_state_dictionary(int *start_state_index) {
 
         /* Return if the end of the microcode is reached. NOP0 should be the end of the microcode. */
         if (!strcmp(state, "NOP0"))
-            return (dictionary_index == NUM_LABELED_STATES - 1);
+            return dictionary_index == (NUM_LABELED_STATES - 1);
+
+        dictionary_index++;
     }
 
     /* Unreachable */

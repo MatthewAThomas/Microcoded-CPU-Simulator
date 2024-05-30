@@ -7,7 +7,7 @@ OBJDIR := obj
 OBJS := $(addprefix $(OBJDIR)/, $(patsubst %.c,%.o,$(wildcard *.c)))
 
 CC := gcc
-CFLAGS := -std=c99
+CFLAGS := -std=c99 -g
 
 .PHONY: all clean
 

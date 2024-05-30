@@ -1,2 +1,2 @@
-dep-files/register.o: register.c register.h ucode-engine.h microcode.h \
+dep-files/register.o: register.c register.h ucode-engine.h \
  call-functional-unit.h bus.h

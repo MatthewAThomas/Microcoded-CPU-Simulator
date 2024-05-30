@@ -6,7 +6,7 @@
 uint8_t ZERO_FLAG = 0;
 
 /* Each ALU Op takes two integers and returns an integer */
-int32_t (* ALU_Ops[11]) (int32_t A_input, int32_t B_input);
+int32_t (* ALU_Ops[NUM_ALU_OPS]) (int32_t A_input, int32_t B_input);
 
 /* ---------- define the operations -------------*/
 int32_t COPY_A (int32_t A_input, int32_t B_input) {
@@ -104,6 +104,8 @@ void init_alu_unit(void) {
     ALU_Ops[8] = SLT;
     ALU_Ops[9] = SLTU;
     ALU_Ops[10] = AND;
+    /* The following were not a part of the specified ALUOps for this CPU, but
+       I added them to make implementing instructions a little easier */
     ALU_Ops[11] = OR;
     ALU_Ops[12] = XOR;
     ALU_Ops[13] = SLL;
