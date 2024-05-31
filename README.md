@@ -40,6 +40,7 @@ does not violate formatting is shown below:
     CafeD00d # the line immediately above has a couple of spaces but is otherwise blank
     123 4 5678
 
+The text section should be written first, followed by the data section.
 The size of the "physical" memory is defined by the macro MEM_SIZE in mem.c. It is assumed that programs will be running
 bare-metal, so the entire program must be loaded into physical memory: addresses 0 through MEM_SIZE - 1. Currently,
 memory is 1024 bytes.  

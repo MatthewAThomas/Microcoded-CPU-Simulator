@@ -45,7 +45,8 @@ void write_regs(void) {
 
 void load_regs(void) {
     struct Register *r_pointer = &(REGISTER_FILE[REGISTER_FILE_MUX[CONTROL_SIGNALS.RegSel]]);
-    if (*(r_pointer -> Ld_Wr))
+    if (*(r_pointer -> Ld_Wr)  
+    && (REGISTER_FILE_MUX[CONTROL_SIGNALS.RegSel] != 0)) // x0 register should remain 0
         r_pointer -> value = DATA_BUS;
 
     if (*(IR.Ld_Wr))

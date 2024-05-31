@@ -133,9 +133,9 @@ void decode(int32_t instruction) {
     FUNCT3 = (instruction >> 12) & 0b111;
     FUNCT7 = (instruction >> 25) & 0b1111111;
 
-    uint8_t rd = (instruction >> 7) & 0b1111111;
-    uint8_t rs1 = (instruction >> 15) & 0b1111111;
-    uint8_t rs2 = (instruction >> 20) & 0b1111111;
+    uint8_t rd = (instruction >> 7) & 0b11111;
+    uint8_t rs1 = (instruction >> 15) & 0b11111;
+    uint8_t rs2 = (instruction >> 20) & 0b11111;
     REGISTER_FILE_MUX[2] = rd;
     REGISTER_FILE_MUX[3] = rs1;
     REGISTER_FILE_MUX[4] = rs2;
