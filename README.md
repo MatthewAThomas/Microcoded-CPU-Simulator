@@ -1,5 +1,7 @@
 # Microcoded RISC-V CPU Emulator
 
+Still under development.
+
 This project is an attempt to create an emulator of the microcoded, single-databus, 32-bit RISC-V CPU introduced in UC Berkeley's Introduction to Computer Architecture course (CS 152). This emulator abstracts at the functional unit level, and should be cycle accurate. More info about this CPU can be found here: https://inst.eecs.berkeley.edu/~cs152/sp24/assets/homeworks/hw01-handout.pdf
 
 Current Approach (5/27/24):
