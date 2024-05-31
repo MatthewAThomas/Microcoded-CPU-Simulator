@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#define NUM_LABELED_STATES 3
+#define NUM_LABELED_STATES 4
 
 #define MICROCODE_WIDTH 13
 
@@ -11,6 +11,8 @@ typedef struct {
     char uBr[3];
     uint8_t control_signals[MICROCODE_WIDTH];
     uint8_t opcode;
+    uint8_t funct3;
+    uint8_t funct7;
 } micro_op;
 
 micro_op MICROCODE[];

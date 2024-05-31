@@ -12,6 +12,8 @@
 #include <stdio.h>
 
 uint8_t OPCODE;
+uint8_t FUNCT3;
+uint8_t FUNCT7;
 
 /* 0 -> PC, 1 -> RA, 2 -> rd, 3 -> rs1, 4 -> rs2 */
 uint8_t REGISTER_FILE_MUX[5] = {32, 1, 0, 0, 0};
@@ -24,6 +26,8 @@ typedef struct {
     char *state;
     int state_index;
     uint8_t opcode;
+    uint8_t funct3;
+    uint8_t funct7;
 } state_dictionary;
 
 /* Each micro-operation corresponds to an index of the MICROCODE array.
@@ -43,6 +47,8 @@ bool initialize_state_dictionary(int *start_state_index) {
         STATE_DICTIONARY[dictionary_index].state = state;
         STATE_DICTIONARY[dictionary_index].state_index = state_index;
         STATE_DICTIONARY[dictionary_index].opcode = MICROCODE[state_index].opcode;
+        STATE_DICTIONARY[dictionary_index].funct3 = MICROCODE[state_index].funct3;
+        STATE_DICTIONARY[dictionary_index].funct7 = MICROCODE[state_index].funct7;
 
         /* First micro-operation executed should be FETCH0 */
         if (!strcmp(state, "FETCH0"))
@@ -81,9 +87,27 @@ int label_to_state_index(char *next_state) {
 int opcode_to_state_index(void) {
     for (int i = 0; i < NUM_LABELED_STATES; i++) {
         uint8_t opcode = STATE_DICTIONARY[i].opcode;
+        uint8_t funct3 = STATE_DICTIONARY[i].funct3;
+        uint8_t funct7 = STATE_DICTIONARY[i].funct7;
         
-        if (opcode == OPCODE)
+        if (opcode != OPCODE)
+            continue;
+
+        /* U or J type instruction (doesn't have funct3 or funct7) */
+        if ((opcode == 0b0010111) || (opcode == 0b0110111) || (opcode == 0b1101111))
             return STATE_DICTIONARY[i].state_index;
+
+        if (funct3 != FUNCT3)
+            continue;
+
+        /* not R or I* type instructions (which have funct 7) */
+        if ((opcode != 0b0110011) && (funct3 !=0b001) && (funct3 != 0b101))
+            return STATE_DICTIONARY[i].state_index;
+
+        if (funct7 != FUNCT7)
+            continue;
+
+        return STATE_DICTIONARY[i].state_index;
     }
 
     printf("Invalid next state provided\n");
@@ -106,6 +130,8 @@ bool init_ucode_engine(void) {
 
 void decode(int32_t instruction) {
     OPCODE = instruction & 0b1111111;
+    FUNCT3 = (instruction >> 12) & 0b111;
+    FUNCT7 = (instruction >> 25) & 0b1111111;
 
     uint8_t rd = (instruction >> 7) & 0b1111111;
     uint8_t rs1 = (instruction >> 15) & 0b1111111;

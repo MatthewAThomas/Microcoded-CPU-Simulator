@@ -34,17 +34,21 @@ Contains the microcode "ROM"
 #define default 0
 // INSERT NEW uOPS BEFORE NOP0. NOP0 SHOULD BE THE LAST LISTED uOP. FETCH0 SHOULD BE THE FIRST LISTED uOP
 micro_op MICROCODE[] = {
-    //    STATE       NEXT STATE      uBr          IRLd    RegSel   RegWr    RegEn     ALd      BLd     ALUOp    ALUEn    MALd     MemWr    MemEn    ImmSel   ImmEn       OPCODE
-    {"FETCH0"      ,           "",          "N", {default,      PC,       0,       1,       1, default, default,       0,       1,       0,       0, default,       0},            0},
-                {"",           "",          "S", {      1, default,       0,       0,       0, default, default,       0,       0,       0,       1, default,       0},            0},
-                {"",           "",          "D", {      0,      PC,       1,       0,       0, default, INC_A_4,       1, default,       0,       0, default,       0},            0},
+    //    STATE       NEXT STATE      uBr          IRLd    RegSel   RegWr    RegEn     ALd      BLd     ALUOp    ALUEn    MALd     MemWr    MemEn    ImmSel   ImmEn       OPCODE    FUNCT3     FUNCT7
+    {"FETCH0"      ,           "",          "N", {default,      PC,       0,       1,       1, default, default,       0,       1,       0,       0, default,       0},         0,         0,         0},
+                {"",           "",          "S", {      1, default,       0,       0,       0, default, default,       0,       0,       0,       1, default,       0},         0,         0,         0},
+                {"",           "",          "D", {      0,      PC,       1,       0,       0, default, INC_A_4,       1, default,       0,       0, default,       0},         0,         0,         0},
 
-    {"ADD"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0},    0b0110011},
-                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},            0},
-                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     ADD,       1,       0,       0,       0, default,       0},            0},
+    {"ADD"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,         0,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     ADD,       1,       0,       0,       0, default,       0},         0,         0,         0},
 
-    {"NOP0"        ,      "FETH0",          "J", { default, default,      0,       0, default, default, default,       0, default,       0,       0, default,       0},            0}
+    {"SUB"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,         0, 0b0100000},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     SUB,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
+    {"NOP0"        ,      "FETH0",          "J", { default, default,      0,       0, default, default, default,       0, default,       0,       0, default,       0},         0,         0,         0}
 };
 
-    //{"          ", "          ", "          ", {       ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        },             },
-    //          {"",           "",           "", {       ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        },             },
+    //{"          ", "          ", "          ", {       ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        },          ,          ,          },
+    //          {"",           "",           "", {       ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        },          ,          ,          },
