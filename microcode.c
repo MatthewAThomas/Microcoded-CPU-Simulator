@@ -47,6 +47,38 @@ micro_op MICROCODE[] = {
                 {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
                 {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     SUB,       1,       0,       0,       0, default,       0},         0,         0,         0},
 
+    {"AND"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,     0b111,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     AND,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
+    {"OR"          ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,     0b110,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,      OR,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
+    {"XOR"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,     0b100,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     XOR,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
+    {"SLL"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,     0b001,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     SLL,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
+    {"SRL"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,     0b101,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     SRL,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
+    {"SRA"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,     0b101, 0b0100000},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     SRA,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
+    {"SLT"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,     0b010,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,     SLT,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
+    {"SLTU"        ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0, default,       0}, 0b0110011,     0b011,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0, default,       0},         0,         0,         0},
+                {"",     "FETCH0",          "J", {      0,      rd,       1,       0,       0,       0,    SLTU,       1,       0,       0,       0, default,       0},         0,         0,         0},
+
     {"NOP0"        ,      "FETH0",          "J", { default, default,      0,       0, default, default, default,       0, default,       0,       0, default,       0},         0,         0,         0}
 };
 
