@@ -43,12 +43,16 @@ static int32_t read(int32_t address) {
     return data;
 }
 
-void exec_memory_unit(void) {
+void load_memory_unit(void) {
+    int32_t address = MA.value;
+
+    if (CONTROL_SIGNALS.MemEn)
+        DATA_BUS = read(address);
+}
+
+void store_memory_unit(void) {
     int32_t address = MA.value;
 
     if (CONTROL_SIGNALS.MemWr)
         write(DATA_BUS, address);
-
-    if (CONTROL_SIGNALS.MemEn)
-        DATA_BUS = read(address);
 }

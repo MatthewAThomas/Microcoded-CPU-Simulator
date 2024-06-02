@@ -159,11 +159,12 @@ void set_control_signals(uint8_t *control_signals) {
 
 void exec_functional_units(void) {
     // "write loop" (README -> How the Emulator Works)
-    exec_memory_unit();
+    load_memory_unit();
     exec_imm_sel_unit();
     exec_alu_unit();
     write_regs();
     // "load loop" (README -> How the Emulator Works)
+    store_memory_unit();
     load_regs();
 }
 
@@ -182,8 +183,7 @@ int get_next_uop(micro_op current_op) {
     if (!strcmp(uBr, "S")) {
         if (BUSY_FLAG == 0)
             return STATE_INDEX + 1;
-        else
-            return STATE_INDEX;
+        return STATE_INDEX;
     }
 
     if (!strcmp(uBr, "J")) {
