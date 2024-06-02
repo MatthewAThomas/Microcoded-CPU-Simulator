@@ -21,8 +21,8 @@ Instruction Cycle:
     - if instruction is completed, fetch next instruction (Instruction Cycle); else execute next uOp
 
 ## Running the Emulator
-Programs run on the emulator are written in machine code. The code is to be written to a text file located in the
-programs subdirectory. To load a program into memory, set its path in the load function in loader.c
+Programs ran on the emulator are written in machine code. The code is to be written to a text file located in the
+**programs** subdirectory. To load a program into memory, set its path in the load function in loader.c
 
 Formatting Programs:
 The CPU uses little-endian byte ordering.
@@ -47,30 +47,18 @@ memory is 1024 bytes.
 
 ## The Emulator's Parts
 There is a submodule for each 'functional unit' (registers, ALU, etc) and 'connection' (signals, buses).
-
-- bus submodule
+- bus submodule (bus.c, bus.h)
     - databus submodule: a signed 32 bit number
     - control signals submodule
-
-- register template: defines register data type, declares all registers
-- register file, register file tri-state buffer, A and B registers, MA register, IR submodule
-
-- memory, memory tri-state buffer, busy flag submodule
-    - includes a loader submodule for loading programs into memory
-        - plan to only support loading raw machine code for now
-
-- ALU, ALU tri-state buffer, zero flag submodule
-
-- decode template: PC, RA, rd, rs1, rs2
-- submodule for decoding instructions
-    - populates the rd, rs1, rs2 fields
-    - sets control signals
-- ucode engine submodule (branch submodule?)
-
-- immediate select, immediate select tri-state buffer submodule
+- register template: defines register data type, declares all registers (register.h)
+- register file, A and B registers, MA register, IR submodule (register.c)
+- memory, busy flag submodule (mem.c)
+    - includes a loader submodule for loading programs into memory (loader.c)
+- ALU, zero flag submodule (alu.c)
+- ucode engine submodule (ucode-engine.c)
+- immediate select, immediate select tri-state buffer submodule (immsel.c)
     - the immediate select formats immediates: e.g. for U type instructions, it would output
       the immediate left shifted by 12
-
 Lastly, main.c, which initializes all the submodules and starts running the CPU.
 
 ## Future Changes
