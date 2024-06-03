@@ -13,11 +13,9 @@ Instruction Cycle:
 - instruction execute
     - ucode engine gets uOp, sets various control signals
     - write loop: loop through functional units. If enable signal is high, write data to the databus
-        - functional units read from data bus or whatever registers feed into them 
         - e.g. the ALU would read from the A and B registers and calculate an operation; 
             it would write to the databus if ALUEn is set high
-    - load loop: loop through the registers and any functional unit that loads from the databus. 
-        - If load signal is high, latch data from databus
+    - load loop: loop through the registers and any functional unit that loads from the databus - if signaled to, latch data from databus
     - if instruction is completed, fetch next instruction (Instruction Cycle); else execute next uOp
 
 ## Running the Emulator
@@ -34,7 +32,7 @@ are expected to be word aligned (i.e. they should start at the beginning of a li
 does not violate formatting is shown below:
 
     DE AD be ef
-    \# the line immediately below is empty (just new line character)
+    # the line immediately below is empty (just new line character)
 
   
     CafeD00d # the line immediately above has a couple of spaces but is otherwise blank
