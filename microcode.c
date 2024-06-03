@@ -136,6 +136,56 @@ micro_op MICROCODE[] = {
                 {"",           "",          "S", {      0,     rs2,       0,       1,       0,       0, default,       0,       0,       1,       0,     default,       0},         0,         0,         0},
                 {"",     "FETCH0",          "J", {      0, default,       0,       0,       0,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
 
+    //    STATE       NEXT STATE      uBr          IRLd    RegSel   RegWr    RegEn     ALd      BLd     ALUOp    ALUEn    MALd     MemWr    MemEn      ImmSel     ImmEn      OPCODE    FUNCT3     FUNCT7
+    {"BEQ"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0}, 0b1100011,     0b000,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",   "_BEQ_RET",         "NZ", {      0, default,       0,       0,       0,       0,     SUB,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0, default,       0,       0,       0,       1, default,       0,       0,       0,       0,      B_TYPE,       1},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       1,       0,       0,       0,     ADD,       1,       0,       0,       0,     default,       0},         0,         0,         0},
+        {"_BEQ_RET",     "FETCH0",          "J", {      0, default,       0,       0,       0,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+
+    {"BGE"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0}, 0b1100011,     0b101,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",   "_BGE_RET",         "EZ", {      0, default,       0,       0,       0,       0,     SLT,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0, default,       0,       0,       0,       1, default,       0,       0,       0,       0,      B_TYPE,       1},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       1,       0,       0,       0,     ADD,       1,       0,       0,       0,     default,       0},         0,         0,         0},
+        {"_BGE_RET",     "FETCH0",          "J", {      0, default,       0,       0,       0,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+
+    {"BGEU"        ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0}, 0b1100011,     0b111,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",  "_BGEU_RET",         "EZ", {      0, default,       0,       0,       0,       0,    SLTU,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0, default,       0,       0,       0,       1, default,       0,       0,       0,       0,      B_TYPE,       1},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       1,       0,       0,       0,     ADD,       1,       0,       0,       0,     default,       0},         0,         0,         0},
+       {"_BGEU_RET",     "FETCH0",          "J", {      0, default,       0,       0,       0,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+
+    {"BLT"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0}, 0b1100011,     0b100,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",   "_BLT_RET",         "NZ", {      0, default,       0,       0,       0,       0,     SLT,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0, default,       0,       0,       0,       1, default,       0,       0,       0,       0,      B_TYPE,       1},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       1,       0,       0,       0,     ADD,       1,       0,       0,       0,     default,       0},         0,         0,         0},
+        {"_BLT_RET",     "FETCH0",          "J", {      0, default,       0,       0,       0,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+
+    {"BLTU"        ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0}, 0b1100011,     0b110,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",  "_BLTU_RET",         "NZ", {      0, default,       0,       0,       0,       0,    SLTU,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0, default,       0,       0,       0,       1, default,       0,       0,       0,       0,      B_TYPE,       1},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       1,       0,       0,       0,     ADD,       1,       0,       0,       0,     default,       0},         0,         0,         0},
+       {"_BLTU_RET",     "FETCH0",          "J", {      0, default,       0,       0,       0,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+
+    {"BNE"         ,           "",          "N", {      0,     rs1,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0}, 0b1100011,     0b001,         0},
+                {"",           "",          "N", {      0,     rs2,       0,       1,       0,       1, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",   "_BNE_RET",         "EZ", {      0, default,       0,       0,       0,       0,     SUB,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       0,       1,       1,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+                {"",           "",          "N", {      0, default,       0,       0,       0,       1, default,       0,       0,       0,       0,      B_TYPE,       1},         0,         0,         0},
+                {"",           "",          "N", {      0,      PC,       1,       0,       0,       0,     ADD,       1,       0,       0,       0,     default,       0},         0,         0,         0},
+        {"_BNE_RET",     "FETCH0",          "J", {      0, default,       0,       0,       0,       0, default,       0,       0,       0,       0,     default,       0},         0,         0,         0},
+
+
     {"NOP0"        ,      "FETH0",          "J", { default, default,      0,       0, default, default, default,       0, default,       0,       0,     default,       0},         0,         0,         0}
 };
 
