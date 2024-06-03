@@ -4,8 +4,17 @@
 #include <stdio.h>
 
 int main(int argc, char **argv) {
+    char *program = "test-add-ld-st.txt";
+
+    if (argc == 2)
+        program = argv[1];
+    if (argc > 2) {
+        printf("Too many arguments provided to emulator\n");
+        return -1;
+    }
+
     /* Initialize functional units */    
-    if (init_memory_unit() == false) {
+    if (init_memory_unit(program) == false) {
         printf("Error encountered while initializing the memory unit\n");
         return -1;
     }

@@ -8,7 +8,7 @@
 */
 
 /* Memory Unit */
-bool init_memory_unit(void);
+bool init_memory_unit(char *program);
 void load_memory_unit(void);
 void store_memory_unit(void);
 

@@ -13,8 +13,8 @@ uint8_t BUSY_FLAG = 0; // Currently assumes the memory unit has 1 cycle latency
 uint8_t MEMORY[MEM_SIZE];
 
 /* Initializes memory: loads the program */
-bool init_memory_unit(void) {
-    bool succesful_load = load(MEMORY, MEM_SIZE);
+bool init_memory_unit(char *program) {
+    bool succesful_load = load(MEMORY, MEM_SIZE, program);
     if (succesful_load == false) {
         printf("Error encountered while loading the program\n");
         return false;
