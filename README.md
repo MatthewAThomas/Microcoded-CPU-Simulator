@@ -39,9 +39,9 @@ does not violate formatting is shown below:
     123 4 5678
 
 The text section should be written first, followed by the data section.
-The size of the "physical" memory is defined by the macro MEM_SIZE in mem.c. It is assumed that programs will be running
-bare-metal, so the entire program must be loaded into physical memory: addresses 0 through MEM_SIZE - 1. Currently,
-memory is 1024 bytes.  
+It is assumed that programs will be running bare-metal, so no syscalls are used (i.e. no ecall instruction), and the 
+entire program must be loaded into physical memory: addresses 0 through MEM_SIZE - 1. The size of the "physical" memory
+is defined by the macro MEM_SIZE in mem.c. Currently, memory is 1024 bytes.  
 
 ## The Emulator's Parts
 There is a submodule for each 'functional unit' (registers, ALU, etc) and 'connection' (signals, buses).
@@ -54,7 +54,7 @@ There is a submodule for each 'functional unit' (registers, ALU, etc) and 'conne
     - includes a loader submodule for loading programs into memory (loader.c)
 - ALU, zero flag submodule (alu.c)
 - ucode engine submodule (ucode-engine.c)
-- immediate select, immediate select tri-state buffer submodule (immsel.c)
+- immediate select submodule (immsel.c)
     - the immediate select formats immediates: e.g. for U type instructions, it would output
       the immediate left shifted by 12
 Lastly, main.c, which initializes all the submodules and starts running the CPU.
