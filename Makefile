@@ -1,6 +1,6 @@
 # CHATGPT CODE. I honeslty don't understand it.
 
-BIN := emulator
+BIN := simulator
 DEPDIR := dep-files
 DEPFILES := $(addprefix $(DEPDIR)/, $(patsubst %.c,%.dep,$(wildcard *.c)))
 OBJDIR := obj

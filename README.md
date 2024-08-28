@@ -1,12 +1,12 @@
-# Microcoded RISC-V CPU Emulator
+# Microcoded RISC-V CPU Simulator
 
 Still under development.
 
-This project is an attempt to create an emulator of the microcoded, single-databus, 32-bit RISC-V CPU introduced in UC Berkeley's Introduction to Computer Architecture course (CS 152). This emulator abstracts at the functional unit level, and should be cycle accurate. More info about this CPU can be found here: https://inst.eecs.berkeley.edu/~cs152/sp24/assets/homeworks/hw01-handout.pdf
+This project is an attempt to create a simulator of the microcoded, single-databus, 32-bit RISC-V CPU introduced in UC Berkeley's Introduction to Computer Architecture course (CS 152). This simulator abstracts at the functional unit level, and should be cycle accurate. More info about this CPU can be found here: https://inst.eecs.berkeley.edu/~cs152/sp24/assets/homeworks/hw01-handout.pdf
 
 Current Approach (5/27/24):
 
-## How the Emulator Works
+## How the Simulator Works
 Instruction Cycle:
 - instruction fetch and decode
     - FETCH0: D microbranch invokes instruction decode
@@ -18,8 +18,8 @@ Instruction Cycle:
     - load loop: loop through the registers and any functional unit that loads from the databus - if signaled to, latch data from databus
     - if instruction is completed, fetch next instruction (Instruction Cycle); else execute next uOp
 
-## Running the Emulator
-Programs ran on the emulator are written in machine code. The code is to be written to a text file located in the
+## Running the Simulator
+Programs ran on the simulator are written in machine code. The code is to be written to a text file located in the
 **programs** subdirectory. To load a program into memory, set its path in the load function in loader.c
 
 Formatting Programs:
@@ -43,7 +43,7 @@ It is assumed that programs will be running bare-metal, so no syscalls are used 
 entire program must be loaded into physical memory: addresses 0 through MEM_SIZE - 1. The size of the "physical" memory
 is defined by the macro MEM_SIZE in mem.c. Currently, memory is 1024 bytes.  
 
-## The Emulator's Parts
+## The Simulator's Parts
 There is a submodule for each 'functional unit' (registers, ALU, etc) and 'connection' (signals, buses).
 - bus submodule (bus.c, bus.h)
     - databus submodule: a signed 32 bit number
@@ -60,4 +60,4 @@ There is a submodule for each 'functional unit' (registers, ALU, etc) and 'conne
 Lastly, main.c, which initializes all the submodules and starts running the CPU.
 
 ## Future Changes
-Allow the emulator to take inputs for the size of memory and path to the program to be run. 
+Allow the simulator to take inputs for the size of memory and path to the program to be run. 
