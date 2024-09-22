@@ -1,1 +1,0 @@
-dep-files/microcode.o: microcode.c microcode.h
