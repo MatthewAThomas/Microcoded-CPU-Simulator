@@ -19,7 +19,7 @@ all: $(BIN)
 
 # Rule to create executable
 $(BIN): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o
+	$(CC) $(CFLAGS) $(OBJS) -o $@
 
 # Rule to compile .c files to .o files
 $(OBJ)/%.o: $(SRC)/%.c
@@ -33,4 +33,4 @@ $(OBJ)/%.o: $(SRC)/%.c
 # -include $(DEPFILES)
 
 clean:
-	$(RM) -r $(BINOBJDIR) $(DEPDIR)
+	$(RM) -r $(BIN)
