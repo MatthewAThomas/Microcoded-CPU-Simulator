@@ -1,13 +1,17 @@
-# CHATGPT CODE. I honeslty don't understand it.
+# Makefile inspired by Jacob Sorber's video: https://www.youtube.com/watch?v=CRlqU9XzVr4
 
-BIN := simulator
-DEPDIR := dep-files
-DEPFILES := $(addprefix $(DEPDIR)/, $(patsubst %.c,%.dep,$(wildcard *.c)))
-OBJDIR := obj
-OBJS := $(addprefix $(OBJDIR)/, $(patsubst %.c,%.o,$(wildcard *.c)))
+CC = gcc
+CFLAGS = -std=c99 -g
 
-CC := gcc
-CFLAGS := -std=c99 -g
+BIN = simulator
+SRC = src
+OBJ = obj
+SRCS = $(wildcard $(SRC)/*.c)
+OBJS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
+
+# DEP = dep-files
+# DEPFILES = $(patsubst $(SRC)/%.h, %(DEP)/%.o, $(SRCS))
+
 
 .PHONY: all clean
 
@@ -15,20 +19,18 @@ all: $(BIN)
 
 # Rule to create executable
 $(BIN): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $(OBJS) -o
 
 # Rule to compile .c files to .o files
-$(OBJDIR)/%.o: %.c
-	@mkdir -p $(dir $@)
+$(OBJ)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Rule to generate dependency files
-$(DEPDIR)/%.dep: %.c
-	@mkdir -p $(dir $@)
-	$(CC) -MM $< -MF $@ -MT $(@:.dep=.o)
+# # Rule to generate dependency files
+# $(DEPDIR)/%.dep: %.c
+# 	$(CC) -MM $< -MF $@ -MT $(@:.dep=.o)
 
-# Include dependency files
--include $(DEPFILES)
+# # Include dependency files
+# -include $(DEPFILES)
 
 clean:
-	$(RM) -r $(OBJDIR) $(DEPDIR)
+	$(RM) -r $(BINOBJDIR) $(DEPDIR)
