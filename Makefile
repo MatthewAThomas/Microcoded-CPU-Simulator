@@ -1,7 +1,8 @@
 # Makefile inspired by Jacob Sorber's video: https://www.youtube.com/watch?v=CRlqU9XzVr4
 
 CC = gcc
-CFLAGS = -std=c99 -g
+DEPFLAGS = -MP -MD
+CFLAGS = -std=c99 -g $(DEPFLAGS)
 
 BIN = simulator
 SRC = src
@@ -9,8 +10,8 @@ OBJ = obj
 SRCS = $(wildcard $(SRC)/*.c)
 OBJS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 
-# DEP = dep-files
-# DEPFILES = $(patsubst $(SRC)/%.h, %(DEP)/%.o, $(SRCS))
+DEP = dep-files
+DEPFILES = $(patsubst $(SRC)/%.c, %(DEP)/%.dep, $(SRCS))
 
 
 .PHONY: all clean
@@ -25,12 +26,12 @@ $(BIN): $(OBJS)
 $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# # Rule to generate dependency files
-# $(DEPDIR)/%.dep: %.c
-# 	$(CC) -MM $< -MF $@ -MT $(@:.dep=.o)
+# Rule to generate dependency files
+$(DEP)/%.dep: %.c
+	$(CC) -MM $< -MF $@ -MT $(@:.dep=.o)
 
-# # Include dependency files
-# -include $(DEPFILES)
+# Include dependency files
+-include $(DEPFILES)
 
 clean:
 	$(RM) -r $(BIN)
