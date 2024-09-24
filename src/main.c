@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
     if (argc == 2)
         program = argv[1];
     if (argc > 2) {
-        printf("Too many arguments provided to emulator\n");
+        printf("Too many arguments provided to simulator\n");
         return -1;
     }
 
