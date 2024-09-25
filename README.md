@@ -22,7 +22,9 @@ Instruction Cycle:
 Programs ran on the simulator are written in machine code. The code is to be written to a text file located in the
 **programs** subdirectory. To load a program into memory, set its path in the load function in loader.c
 
-Formatting Programs:
+TODO: Once the simulator starts, it will prompt the user for input. Inputting an 'n' advances the simulator to the next micro-operation. Inputting 'q' stops the simulator.
+
+## Writing Programs
 The CPU uses little-endian byte ordering.
 Each line containing machine code represents four bytes of memory.
 Each line of machine code is expected to be 12 characters long, including spaces but not including comments. Comments are 
