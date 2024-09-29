@@ -9,3 +9,5 @@ struct Register IR;
 struct Register A;
 struct Register B;
 struct Register MA;
+
+void print_registers(void);

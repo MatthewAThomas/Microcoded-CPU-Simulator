@@ -19,5 +19,7 @@ struct control_signals {
 };
 struct control_signals CONTROL_SIGNALS;
 
+void print_bus(void);
+
 /* Initialize bus data structures. Return NULL if not succesful */
 // void init_control_bus(void);

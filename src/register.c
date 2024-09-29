@@ -2,6 +2,7 @@
 #include "ucode-engine.h"
 #include "call-functional-unit.h"
 #include "bus.h"
+#include <stdio.h>
 
 #define REGISTER_FILE_SIZE 33
 
@@ -60,4 +61,16 @@ void load_regs(void) {
 
     if (*(MA.Ld_Wr))
         MA.value = DATA_BUS;
+}
+
+void print_registers(void) {
+    for (int i = 0; i < REGISTER_FILE_SIZE; i++) {
+        printf("Register x%d: val = %d, load/write = %u\n",
+               i, REGISTER_FILE[i].value, REGISTER_FILE[i].Ld_Wr);
+    }
+
+    printf("         IR: val = %d, load/write = %u\n", IR.value, IR.Ld_Wr);
+    printf("          A: val = %d, load/write = %u\n", A.value, A.Ld_Wr);
+    printf("          B: val = %d, load/write = %u\n", B.value, B.Ld_Wr);
+    printf("         MA: val = %d, load/write = %u\n", MA.value, MA.Ld_Wr);
 }

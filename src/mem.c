@@ -56,3 +56,8 @@ void store_memory_unit(void) {
     if (CONTROL_SIGNALS.MemWr)
         write(DATA_BUS, address);
 }
+
+void print_memory(void) {
+    printf("Memory:\n");
+    printf("%x", MEMORY);
+}
