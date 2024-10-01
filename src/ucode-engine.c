@@ -6,6 +6,7 @@
 #include "bus.h"
 #include "call-functional-unit.h"
 #include "alu.h"
+#include "ui.h"
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
@@ -221,6 +222,11 @@ int exec_ucode_engine(void) {
 
         if (STATE_INDEX == -1) {
             printf("Error encountered while running the program\n");
+            return 1;
+        }
+
+        if (print_state(&current_op)) {
+            printf("Leaving simulator early\n");
             return 1;
         }
     }

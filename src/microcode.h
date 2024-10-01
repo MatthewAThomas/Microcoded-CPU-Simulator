@@ -1,3 +1,6 @@
+#ifndef MICROCODE_H
+#define MICROCODE_H
+
 #include <stdint.h>
 
 #define NUM_LABELED_STATES 35
@@ -16,3 +19,5 @@ typedef struct {
 } micro_op;
 
 micro_op MICROCODE[];
+
+#endif // MICROCODE_H

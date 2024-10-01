@@ -15,17 +15,44 @@ void print_micro_op(micro_op *op) {
            op -> state, op -> next_state, op -> uBr, op -> opcode, op -> funct3, op -> funct7);
 }
 
-void print_state(micro_op *op) {
-    if (strcmp("FETCH0", op -> state) && strcmp("", op -> state))
+void print_menu(void) {
+    printf("n -> execute next micro-operation\n");
+    printf("o -> print current micro-operation\n");
+    printf("b -> print state of control and data buses\n");
+    printf("r -> print state of registers\n");
+    printf("m -> print state of memory\n");
+    printf("q -> exit simulator\n");
+}
+
+int print_state(micro_op *op) {
+    if (strcmp("FETCH0", op -> state))// && strcmp("", op -> state))
         instruction = op -> state;
 
-    printf("%s\n\n", instruction);
+    if (instruction != NULL)
+        printf("%s\n\n", instruction);
     
-    // TODO: add logic so that user determines which of these functions run
-    //       example - b => prints bus, r => prints registers, m => prints memory
-    //                 n => return from print_state and execute the next micro-operation
-    print_micro_op(op);
-    print_bus();
-    print_registers();
-    print_memory();
+    char buffer[2];
+    scanf("%c", buffer);
+    buffer[1] = '\00';
+    //clear();
+    while (buffer[0] != 'n') {
+        if (buffer[0] == 'o')
+            print_micro_op(op);
+        if (buffer[0] == 'b')
+            print_bus();
+        if (buffer[0] == 'r')
+            print_registers();
+        if (buffer[0] == 'm')
+            print_memory();
+        if (buffer[0] == 'h')
+            print_menu();
+
+        if (buffer[0] == 'q')
+            return 1;
+
+        scanf("%c", buffer);
+        clear();
+    }
+
+    return 0;
 }
