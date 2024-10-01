@@ -64,13 +64,14 @@ void load_regs(void) {
 }
 
 void print_registers(void) {
-    for (int i = 0; i < REGISTER_FILE_SIZE; i++) {
+    for (int i = 0; i < REGISTER_FILE_SIZE - 1; i++) {
         printf("Register x%d: val = %d, load/write = %u\n",
                i, REGISTER_FILE[i].value, REGISTER_FILE[i].Ld_Wr);
     }
+    printf("         PC: val = 0x%x, load/write = %u\n", REGISTER_FILE[32].value, REGISTER_FILE[32].Ld_Wr);
 
-    printf("         IR: val = %d, load/write = %u\n", IR.value, IR.Ld_Wr);
+    printf("         IR: val = 0x%x, load/write = %u\n", IR.value, IR.Ld_Wr);
     printf("          A: val = %d, load/write = %u\n", A.value, A.Ld_Wr);
     printf("          B: val = %d, load/write = %u\n", B.value, B.Ld_Wr);
-    printf("         MA: val = %d, load/write = %u\n", MA.value, MA.Ld_Wr);
+    printf("         MA: val = 0x%x, load/write = %u\n", MA.value, MA.Ld_Wr);
 }

@@ -31,7 +31,7 @@ int print_state(micro_op *op) {
     if (instruction != NULL)
         printf("%s\n\n", instruction);
     
-    char buffer[2];
+    char buffer[2] = {'\00', '\00'};
     scanf("%c", buffer);
     buffer[1] = '\00';
     //clear();
@@ -51,7 +51,7 @@ int print_state(micro_op *op) {
             return 1;
 
         scanf("%c", buffer);
-        clear();
+        // clear();
     }
 
     return 0;

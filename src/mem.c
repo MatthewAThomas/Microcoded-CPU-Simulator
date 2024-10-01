@@ -59,5 +59,7 @@ void store_memory_unit(void) {
 
 void print_memory(void) {
     printf("Memory:\n");
-    printf("%x", MEMORY);
+    for (int i = 0; i < MEM_SIZE / 4; i += 4) {
+        printf("address 0x%x: 0x%x\n", i, ((int *) MEMORY)[i / 4]);
+    }
 }
